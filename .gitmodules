@@ -1,0 +1,9 @@
+[submodule "42printf"]
+	path = 42printf
+	url = https://github.com/lomikist/42printf
+[submodule "42get_next_line"]
+	path = 42get_next_line
+	url = https://github.com/lomikist/42get_next_line
+[submodule "42libft"]
+	path = 42libft
+	url = https://github.com/lomikist/lib_ft
