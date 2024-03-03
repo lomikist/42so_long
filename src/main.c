@@ -27,6 +27,28 @@ char	**read_map(int fd)
 	free(file_content_in_one_line);
 	return (result);
 }
+
+// int	check_border(const char **map)
+// {
+
+// }
+
+int	check_lines(char **map)
+{
+	int	i;
+	size_t	len;
+
+	i = 1;
+	len = ft_strlen(map[0]); 
+	while (map[i])
+	{
+		if (ft_strlen(map[i]) != len)
+			return 0;
+		i++;
+	}
+	return 1;
+}
+
 int	main(void)
 {
 	char	**map;
@@ -34,5 +56,8 @@ int	main(void)
 
 	fd = open("./maps/map.bar", O_RDONLY);
 	map = read_map(fd);
+	// check_lines(map);
+	printf("%d",check_lines(map));
+	// check_border(map);
 	close(fd);
 }
