@@ -1,4 +1,4 @@
-NAME = main
+NAME = ../main
 
 SRCS =  ./src/main.c ./42printf/functions.c
 

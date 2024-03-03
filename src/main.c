@@ -1,5 +1,5 @@
-#include "../get_next_line/get_next_line.h"
-#include "../libft/libft.h"
+#include "../42get_next_line/get_next_line.h"
+// #include "../42libft/libft.h"
 #include <fcntl.h>
 
 char **read_map(int fd);
@@ -28,7 +28,7 @@ char **read_map(int fd)
 		if(i == 0)
 			file_content_in_one_line = ft_strdup((const char *)one_line);
 		else if (one_line != NULL)
-			file_content_in_one_line = ft_strjoin_gnl(file_content_in_one_line, one_line);
+			file_content_in_one_line = ft_strjoin(file_content_in_one_line, one_line);
 		free(one_line);
 		i++;
 	}
