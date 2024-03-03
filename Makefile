@@ -1,8 +1,8 @@
-NAME = ../main
+NAME = main
 
-SRCS =  ./src/main.c ./42printf/functions.c
+SRCS = ./src/main.c ./utils/get_next_line/get_next_line.c ./utils/get_next_line/get_next_line_utils.c  ./utils/get_next_line/ft_split.c
 
-CC = cc
+CC = cc -g
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -11,9 +11,10 @@ OBJS = $(SRCS:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJS)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@ 
+	$(CC) $(FLAGS) -c $< -o $@ 
 
 clean : 
 	rm -rf $(OBJS)
