@@ -32,7 +32,25 @@ char	**read_map(int fd)
 // {
 
 // }
+int check_path(char **map, int y, int x )
+{
+	// up
+	if (map[y - 1][x] == 'E')
+		return (1);
+	else if (map[y + 1][x] == 'E')
+		return (1);
+	else if (map[y][x + 1] == 'E')
+		return (1);	
 
+	if (map[y - 1][x] == '0')
+		check_path(map, y - 1, x);
+	else if (map[y + 1][x] == '0')
+		check_path(map, y + 1, x);
+	else if (map[y][x + 1] == '0')
+		check_path(map, y + 1, x);
+	else
+		return 0;
+}
 int	check_lines(char **map)
 {
 	int	i;
@@ -53,9 +71,19 @@ int	main(void)
 {
 	char	**map;
 	int		fd;
+	int		i;
 
+	i = 0;
 	fd = open("./maps/map.bar", O_RDONLY);
 	map = read_map(fd);
+	while (map[i])
+	{
+		if (ft_strchr((const char*)map[i], 'P'))
+		{
+		}
+		i++;
+	}
+	
 	// check_lines(map);
 	printf("%d",check_lines(map));
 	// check_border(map);
