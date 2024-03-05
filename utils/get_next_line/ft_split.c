@@ -71,11 +71,11 @@ static char	**stick_arr(char **str, const char *s, char c, int len)
 
 char	**ft_split(char const *s, char c)
 {
-	int		i;
+	// int		i;
 	int		len;
 	char	**str;
 
-	i = 0;
+	// i = 0;
 	len = 0;
 	len = get_words_count(s, c);
 	str = malloc(sizeof(char *) * (len + 1));

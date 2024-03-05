@@ -1,5 +1,9 @@
 #include "../utils/get_next_line/get_next_line.h" 
 #include <fcntl.h>
+#define UP 1
+#define DOWN 2
+#define LEFT 3
+#define RIGHT 4
 
 char	**read_map(int fd)
 {
@@ -32,34 +36,31 @@ char	**read_map(int fd)
 // {
 
 // }
-int check_path(char **map, int y, int x )
+int check_path(char **map, int y, int x, int from_dir)
 {
-	//up
-	if (map[y - 1][x] == 'E')
-		return (1);
-	else if (map[y + 1][x] == 'E')
-		return (1);
-	else if (map[y][x + 1] == 'E')
+	if (map[y][x] == 'E')
 		return (1);
 
-	if (map[y - 1][x] == '0')
-		check_path(map, y - 1, x);
-	else if (map[y][x + 1] == '0')
-		check_path(map, y, x + 1);
-	else if (map[y + 1][x] == '0')
-	{
-		map[y][x] = '3';
-		check_path(map, y + 1, x);
-	}
-	else if (map[y][x - 1] == '0')
-	{
-		map[y][x] = '3';
-		check_path(map, y, x - 1);
-	}
-	else
-		return (0);
+	if (from_dir == DOWN && map[y - 1][x] == '1' && map[y][x + 1] == '1' && map[y][x - 1] == '1')
+		return 0;
+	else if (from_dir == UP && map[y + 1][x] == '1' && map[y][x + 1] == '1' && map[y][x - 1] == '1')
+		return 0;
+	else if (from_dir == RIGHT && map[y][x - 1] == '1' && map[y + 1][x] == '1' && map[y - 1][x] == '1')
+		return 0;
+	else if (from_dir == LEFT && map[y][x + 1] == '1' && map[y + 1][x] == '1' && map[y - 1][x] == '1')
+		return 0;
+
+	if ((y - 1) > 0 && check_path(map, y - 1, x, DOWN) == 1 && from_dir == DOWN)
+		return 1;
+	else if ((y + 1) < 5 && check_path(map, y + 1, x, UP) == 1 && from_dir == UP)
+		return 1;
+	else if ((x + 1) < 12 && check_path(map, y, x + 1, LEFT) == 1 && from_dir == LEFT)
+		return 1;
+	else if ((x - 1) > 0 && check_path(map, y, x - 1, RIGHT) && from_dir == RIGHT)
+		return 1;
 	return 0;
 }
+
 int	check_lines(char **map)
 {
 	int		i;
@@ -90,7 +91,7 @@ int	main(void)
 	{
 		finded_char = ft_strchr((const char*)map[i], 'P');
 		if (finded_char)
-			printf("%d", check_path(map, i, finded_char - &map[i][0]));
+			printf("%d", check_path(map, i, finded_char - &map[i][0], 0));
 		i++;
 	}
 	// check_lines(map);
