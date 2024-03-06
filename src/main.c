@@ -5,6 +5,12 @@
 #define LEFT 3
 #define RIGHT 4
 
+struct Point{
+	int x;
+	int y;
+	int from_dir;
+}
+
 char	**read_map(int fd)
 {
 	char	**result;
@@ -36,29 +42,27 @@ char	**read_map(int fd)
 // {
 
 // }
-int check_path(char **map, int y, int x, int from_dir)
+
+int check_dead_case(char **map, struct Point *point)
 {
-	if (map[y][x] == 'E')
+	
+}
+
+int check_path(char **map, struct Point *point)
+{
+
+	if (map[point->y][point->x] == 'E')
 		return (1);
-
-	if (from_dir == DOWN && map[y - 1][x] == '1' && map[y][x + 1] == '1' && map[y][x - 1] == '1')
+	if (map[point->y][point->x] == '1')
 		return 0;
-	else if (from_dir == UP && map[y + 1][x] == '1' && map[y][x + 1] == '1' && map[y][x - 1] == '1')
-		return 0;
-	else if (from_dir == RIGHT && map[y][x - 1] == '1' && map[y + 1][x] == '1' && map[y - 1][x] == '1')
-		return 0;
-	else if (from_dir == LEFT && map[y][x + 1] == '1' && map[y + 1][x] == '1' && map[y - 1][x] == '1')
-		return 0;
-
-	if ((y - 1) > 0 && check_path(map, y - 1, x, DOWN) == 1 && from_dir == DOWN)
-		return 1;
-	else if ((y + 1) < 5 && check_path(map, y + 1, x, UP) == 1 && from_dir == UP)
-		return 1;
-	else if ((x + 1) < 12 && check_path(map, y, x + 1, LEFT) == 1 && from_dir == LEFT)
-		return 1;
-	else if ((x - 1) > 0 && check_path(map, y, x - 1, RIGHT) && from_dir == RIGHT)
-		return 1;
-	return 0;
+	
+	if ((y - 1) > 0 && map[point->y - 1][x] == 0)
+	//  && check_path(map, point))
+	{
+		map[point->y - 1][x] = 2;
+		// return 1;
+	}
+	
 }
 
 int	check_lines(char **map)
@@ -83,15 +87,18 @@ int	main(void)
 	char	*finded_char;
 	int		fd;
 	int		i;
-
+	struct	Point point;
 	i = 0;
 	fd = open("./maps/map.bar", O_RDONLY);
 	map = read_map(fd);
 	while (map[i])
 	{
 		finded_char = ft_strchr((const char*)map[i], 'P');
+		point.x = finded_char - &map[i][0];
+		point.y = i;
+		point.from_dir = 0;
 		if (finded_char)
-			printf("%d", check_path(map, i, finded_char - &map[i][0], 0));
+			printf("%d", check_path(map, &point));
 		i++;
 	}
 	// check_lines(map);
@@ -99,3 +106,26 @@ int	main(void)
 	close(fd);
 	return (0);
 }
+
+
+
+
+
+
+	// if (from_dir == DOWN && map[y - 1][x] == '1' && map[y][x + 1] == '1' && map[y][x - 1] == '1')
+	// 	return 0;
+	// else if (from_dir == UP && map[y + 1][x] == '1' && map[y][x + 1] == '1' && map[y][x - 1] == '1')
+	// 	return 0;
+	// else if (from_dir == RIGHT && map[y][x - 1] == '1' && map[y + 1][x] == '1' && map[y - 1][x] == '1')
+	// 	return 0;
+	// else if (from_dir == LEFT && map[y][x + 1] == '1' && map[y + 1][x] == '1' && map[y - 1][x] == '1')
+	// 	return 0;
+
+	// if ((y - 1) > 0 && check_path(map, y - 1, x, DOWN) == 1 && from_dir == DOWN)
+	// 	return 1;
+	// else if ((y + 1) < 5 && check_path(map, y + 1, x, UP) == 1 && from_dir == UP)
+	// 	return 1;
+	// else if ((x + 1) < 12 && check_path(map, y, x + 1, LEFT) == 1 && from_dir == LEFT)
+	// 	return 1;
+	// else if ((x - 1) > 0 && check_path(map, y, x - 1, RIGHT) && from_dir == RIGHT)
+	// 	return 1;
