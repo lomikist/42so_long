@@ -1,10 +1,10 @@
 NAME = main
 
-SRCS = ./src/main.c ./utils/get_next_line/get_next_line.c ./utils/get_next_line/get_next_line_utils.c  ./utils/get_next_line/ft_split.c
+SRCS = ./src/main.c ./src/checker.c ./utils/get_next_line/get_next_line.c ./utils/get_next_line/get_next_line_utils.c  ./utils/get_next_line/ft_split.c 
 
 CC = cc -g
 
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 OBJS = $(SRCS:.c=.o)
 
