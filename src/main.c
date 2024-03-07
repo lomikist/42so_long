@@ -9,7 +9,16 @@ struct Point{
 	int x;
 	int y;
 	int from_dir;
-}
+};
+
+struct Game
+{
+	char **map;
+	char **map_cp;
+	int m_h;
+	int m_v;
+};
+
 
 char	**read_map(int fd)
 {
@@ -38,31 +47,34 @@ char	**read_map(int fd)
 	return (result);
 }
 
-// int	check_border(const char **map)
-// {
-
-// }
-
-int check_dead_case(char **map, struct Point *point)
+int check_dead_case(struct Game *game, int y, int x)
 {
-	
+	if ((game->map[y + 1][x] == '1' || game->map[y + 1][x] == '2')
+		&& (game->map[y - 1][x] == '1' || game->map[y - 1][x] == '2')
+		&& (game->map[y][x + 1] == '1' || game->map[y][x + 1] == '2')
+		&& (game->map[y][x - 1] == '1' || game->map[y][x - 1] == '2'))
+		return (1);
+	else 
+		return (0);
 }
 
-int check_path(char **map, struct Point *point)
+int check_path(struct Game *game, int y, int x)
 {
 
-	if (map[point->y][point->x] == 'E')
+	if (game->map[y][x] == 'E')
 		return (1);
-	if (map[point->y][point->x] == '1')
-		return 0;
-	
-	if ((y - 1) > 0 && map[point->y - 1][x] == 0)
-	//  && check_path(map, point))
-	{
-		map[point->y - 1][x] = 2;
-		// return 1;
-	}
-	
+	if (game->map[y][x] == '1')
+		return (0);
+	if (game->map[y][x] == '2')
+		return (0);
+	game->map[y][x] = '2';
+	if (check_dead_case(game, y, x))
+		game->map[y][x] = '1';
+	if( check_path(game, y - 1, x) || check_path(game, y, x - 1) || check_path(game, y, x + 1) || check_path(game, y + 1, x))
+		return (1);
+	else
+		return (0);
+	//check dead case and if true write 1 instead of this field ;
 }
 
 int	check_lines(char **map)
@@ -83,22 +95,28 @@ int	check_lines(char **map)
 
 int	main(void)
 {
-	char	**map;
+	// char	**map;
 	char	*finded_char;
 	int		fd;
 	int		i;
 	struct	Point point;
+	struct	Game game;
 	i = 0;
 	fd = open("./maps/map.bar", O_RDONLY);
-	map = read_map(fd);
-	while (map[i])
+	game.map = read_map(fd);
+	close(fd);
+	fd = open("./maps/map.bar", O_RDONLY);
+	game.map_cp = read_map(fd);
+	close(fd);
+
+	while (game.map[i])
 	{
-		finded_char = ft_strchr((const char*)map[i], 'P');
-		point.x = finded_char - &map[i][0];
+		finded_char = ft_strchr((const char*)game.map[i], 'P');
+		point.x = finded_char - &game.map[i][0];
 		point.y = i;
 		point.from_dir = 0;
 		if (finded_char)
-			printf("%d", check_path(map, &point));
+			printf("%d", check_path(&game, point.y, point.x));
 		i++;
 	}
 	// check_lines(map);
