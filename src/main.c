@@ -84,7 +84,7 @@ int	main(void)
 	set_up_game(&engine);
 	set_symbols_count(&engine);
 	check(&engine);
-	draw(engine);
+	draw(engine.game->map);
 
 	return (0);
 }
