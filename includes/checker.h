@@ -1,5 +1,8 @@
+#include "mlx.h"
+
 #ifndef CHECKER_H
 # define CHECKER_H
+
 
 struct s_symbols
 {
@@ -31,6 +34,8 @@ struct s_engine
 	t_player	player;
 	t_game		game;
 	t_symbols	symbols;
+	void        *mlx;
+	void        *window;
 }typedef t_engine;
 
 int	check(t_engine*);

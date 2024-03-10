@@ -1,6 +1,7 @@
-#include "../utils/get_next_line/get_next_line.h" 
+#include "../includes/get_next_line.h" 
 #include <fcntl.h>
 #include "checker.h"
+#define WIN_SIZE 500
 
 char	**read_map(int fd)
 {
@@ -77,14 +78,24 @@ void	set_symbols_count(t_engine *engine)
 	}
 }
 
+void	set_mlx(t_engine *engine)
+{
+	engine->mlx = mlx_init();
+	if (!engine->mlx)
+		// error_message("[MLX ERROR]: can't do mlx_init!\n", 1);
+	engine->window = mlx_new_window(engine->mlx, WIN_SIZE, WIN_SIZE, \
+												"blablabla");
+}
+
 int	main(void)
 {
 	t_engine	engine;
 
 	set_up_game(&engine);
 	set_symbols_count(&engine);
+	set_mlx(&engine);
 	check(&engine);
-	draw(engine.game->map);
-
+	// draw(engine.game->map);
+	mlx_loop(engine.mlx);
 	return (0);
 }

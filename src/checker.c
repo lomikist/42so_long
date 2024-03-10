@@ -1,6 +1,6 @@
-#include "checker.h"
+#include "../includes/checker.h"
 #include <stddef.h>
-#include "../utils/get_next_line/get_next_line.h" 
+#include "../includes/get_next_line.h" 
 
 int	check_dead_case(t_game *game, int y, int x)
 {
