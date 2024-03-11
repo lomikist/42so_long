@@ -18,18 +18,11 @@ MAKE			= make -sC
 MKDIR			= mkdir -p
 RM				= rm -rf
 
-# # Libs
-# LIBFT_DIR		= libft
-# LIBFT			= $(LIBFT_DIR)/libft.a
-# LINKER  	    = -lft -L $(LIBFT_DIR)
-
 # Includes
 INCLUDES_DIR 	= includes
 INCLUDES_FLAG 	= -I$(INCLUDES_DIR)
-#   -I$(LIBFT_DIR) \
 
-INCLUDES		= $(wildcard $(INCLUDES_DIR)/*.h) 
-#   $(LIBFT_DIR)/libft.h \
+INCLUDES		= $(wildcard $(INCLUDES_DIR)/*.h)
 
 # Sources
 SRCS_DIR		= src/
@@ -60,13 +53,7 @@ else
 	INCLUDES_FLAG	+= -I$(MLX_DIR)
 endif
 
-
-all : $(MLX) $(OBJS_DIR) $(NAME)# $(LIBFT)
-
-# $(LIBFT) :
-# 	@echo $(CYAN) " - Making libft..." $(RESET)
-# 	@$(MAKE) $(LIBFT_DIR)
-# 	@echo $(YELLOW) " - Made libft!" $(RESET)
+all : $(MLX) $(OBJS_DIR) $(NAME)
 
 $(MLX) :
 	@echo $(CYAN) " - Making mlx..." $(RESET)
@@ -91,7 +78,6 @@ clean :
 fclean : clean
 	@$(RM) $(NAME)
 	@$(MAKE) $(MLX_DIR) clean
-# @$(MAKE) $(LIBFT_DIR) fclean
 
 re: fclean all
 
