@@ -29,6 +29,7 @@ SRCS_DIR		= src/
 SRC_FILES		= main.c \
 				  checker.c \
 				  draw.c \
+				  utils.c \
 				  ft_split.c \
 			 	  get_next_line_utils.c \
 				  get_next_line.c \

@@ -1,7 +1,10 @@
 #include "../includes/get_next_line.h" 
 #include <fcntl.h>
 #include "checker.h"
-#define WIN_SIZE 500
+
+#define BLOCK_SIZE 70
+
+void	error_message(char *text, int mode);
 
 char	**read_map(int fd)
 {
@@ -78,14 +81,69 @@ void	set_symbols_count(t_engine *engine)
 	}
 }
 
+
+
 void	set_mlx(t_engine *engine)
 {
 	engine->mlx = mlx_init();
 	if (!engine->mlx)
-		// error_message("[MLX ERROR]: can't do mlx_init!\n", 1);
-	engine->window = mlx_new_window(engine->mlx, WIN_SIZE, WIN_SIZE, \
-												"blablabla");
+		error_message("[MLX ERROR]: can't do mlx_init!\n", 1);
+	engine->window = mlx_new_window(engine->mlx, engine->game.m_w * BLOCK_SIZE, \
+					engine->game.m_h * BLOCK_SIZE, "SOOOO LONG");
+	
 }
+
+void	set_imgs(t_engine *engine)
+{
+	int		width = 50;
+	int		height = 50;
+	t_imgs	*imgs;
+
+	imgs = &engine->imgs;
+	imgs->p_1 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/player.xpm", &width, &height);
+	imgs->coin_1 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/coin.xpm", &width, &height);
+	imgs->enemy_1 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/enemy.xpm", &width, &height);
+	imgs->wall = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/wall.xpm", &width, &height);
+	imgs->bg = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/bg.xpm", &width, &height);
+}
+
+// void	put_img(int *arr, char symbol, t_engine *game, int *switcher)
+// {
+// 	int	i;
+// 	int	j;
+// 	t_game *game;
+
+// 	game = engine->game;
+// 	i = arr[0];
+// 	j = arr[1];
+// 	if (symbol == Wall)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.wall, j, i);
+// 	else if (symbol == Empty)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.bg, j, i);
+// 	else if (symbol == Coin && *switcher < SWITCH / 2)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.coin_1, j, i);
+// 	else if (symbol == Coin && *switcher < SWITCH)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.coin_2, j, i);
+// 	else if (symbol == Enemy && *switcher < SWITCH / 2)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.enemy_1, j, i);
+// 	else if (symbol == Enemy && *switcher < SWITCH)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.enemy_2, j, i);
+// 	else if (symbol == Exit && game->map.coin == game->c_collect)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.e_open, j, i);
+// 	else if (symbol == Exit)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.e_close, j, i);
+// 	else if (symbol == Player && *switcher < SWITCH / 2)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.p_1, j, i);
+// 	else if (symbol == Player && *switcher < SWITCH)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.p_2, j, i);
+// }
+
+
 
 int	main(void)
 {
@@ -94,7 +152,9 @@ int	main(void)
 	set_up_game(&engine);
 	set_symbols_count(&engine);
 	set_mlx(&engine);
+	set_imgs(&engine);
 	check(&engine);
+	mlx_put_image_to_window(engine.mlx, engine.window, engine.imgs.wall, 10, 10);
 	// draw(engine.game->map);
 	mlx_loop(engine.mlx);
 	return (0);
