@@ -142,8 +142,46 @@ void	set_imgs(t_engine *engine)
 // 	else if (symbol == Player && *switcher < SWITCH)
 // 		mlx_put_image_to_window(game->mlx, game->win, game->imgs.p_2, j, i);
 // }
+void	draw_block(t_engine *engine, char symbol, int i, int j)
+{
+	if (symbol == '1')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.wall, j, i);
+	else if (symbol == 'X')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.bg, j, i);
+	else if (symbol == 'C')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.coin_1, j, i);
+	else if (symbol == 'C')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.coin_2, j, i);
+	else if (symbol == 'X')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.enemy_1, j, i);
+	else if (symbol == 'E' && engine->symbols.coin_c == engine->)
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.e_open, j, i);
+	else if (symbol == 'P')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p_2, j, i);
+}
 
+void	draw_game(t_engine *engine)
+{
+	int	i;
+	int j;
+	char **map;
+	int	x;
+	int	y;
 
+	map = engine->game.map;
+	i = -1;
+	j = -1;
+	while (map[++i])
+	{
+		j = -1;
+		while (map[i][++j])
+		{
+			x = j * BLOCK_SIZE;
+			y = i * BLOCK_SIZE;
+			draw_block(engine, map[i][j], x, y);
+		}
+	}
+}
 
 int	main(void)
 {
@@ -151,10 +189,10 @@ int	main(void)
 
 	set_up_game(&engine);
 	set_symbols_count(&engine);
+	check(&engine);
 	set_mlx(&engine);
 	set_imgs(&engine);
-	check(&engine);
-	mlx_put_image_to_window(engine.mlx, engine.window, engine.imgs.wall, 10, 10);
+	draw_game(&engine);
 	// draw(engine.game->map);
 	mlx_loop(engine.mlx);
 	return (0);
