@@ -1,4 +1,4 @@
-#include "../includes/checker.h"
+#include "checker.h"
 #include <stddef.h>
 #include "../includes/get_next_line.h" 
 
@@ -72,13 +72,9 @@ int	check_boarder(t_game *game)
 
 int	check_p_e_c(t_symbols *symbols)
 {
-	if (symbols->exit_c != 1)
-		return (0);
-	else if (symbols->player_c != 1)
-		return (0);
-	else if (symbols->coin_c < 1)
-		return (0);
-	return (1);
+	if (symbols->exit_c == 1 && symbols->player_c == 1 && symbols->coin_c > 1)
+		return (1);
+	return (0);
 }
 
 int	check(t_engine *engine)
@@ -88,9 +84,12 @@ int	check(t_engine *engine)
 
 	player = &engine->player;
 	game = &engine->game;
-	if (check_lines(game) && check_boarder(game)
-		&& check_p_e_c(&engine->symbols)
-		&& check_path(game, player->y, player->x))
+	if (
+		check_lines(game) == 1 
+		// && check_boarder(game) == 1
+		&& check_p_e_c(&engine->symbols) == 1
+		&& check_path(game, player->y, player->x) == 1
+		)
 		return (1);
 	return (0);
 }

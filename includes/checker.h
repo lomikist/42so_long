@@ -13,12 +13,12 @@ typedef struct s_symbols
 
 typedef struct s_imgs
 {
-	void	*p_1;
-	void	*p_2;
-	void	*coin_1;
-	void	*coin_2;
-	void	*enemy_1;
-	void	*enemy_2;
+	void	*p;
+	void	*grass;
+	void	*coin;
+	// void	*coin_2;
+	void	*enemy;
+	// void	*enemy_2;
 	void	*wall;
 	void	*e_open;
 	void	*e_close;
