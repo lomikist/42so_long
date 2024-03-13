@@ -29,13 +29,14 @@ SRCS_DIR		= src/
 SRC_FILES		= main.c \
 				  checker.c \
 				  draw.c \
+				  control.c \
 				  utils.c \
 				  ft_split.c \
 				  events.c \
 			 	  get_next_line_utils.c \
 				  get_next_line.c \
-
-SRCS			= $(addprefix $(SRCS_DIR), $(SRC_FILES))
+				  ft_itoa.c \
+# SRCS			= $(addprefix $(SRCS_DIR), $(SRC_FILES))
 
 # Objects
 OBJS_DIR		= objs/

@@ -1,4 +1,5 @@
 #include "mlx.h"
+#define BLOCK_SIZE 80
 
 #ifndef CHECKER_H
 # define CHECKER_H
@@ -13,13 +14,14 @@ typedef struct s_symbols
 
 typedef struct s_imgs
 {
-	void	*p;
+	void	*p_1;
+	void	*p_2;
 	void	*grass;
 	void	*coin;
 	void	*enemy;
 	void	*wall;
-	void	*e_open;
-	void	*e_close;
+	void	*door_1;
+	void	*door_2;
 	void	*bg;
 }	t_imgs;
 
@@ -27,6 +29,8 @@ typedef struct s_player
 {
 	int	x;
 	int	y;
+	int points;
+	int img_flag;
 }	t_player;
 
 typedef struct s_game

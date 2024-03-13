@@ -2,9 +2,9 @@
 #include <fcntl.h>
 #include "checker.h"
 
-#define BLOCK_SIZE 50
 
 void	error_message(char *text, int mode);
+int		on_key_hook_event(int key, t_engine *engine);
 
 char	**read_map(int fd)
 {
@@ -52,6 +52,8 @@ void	set_up_game(t_engine *engine)
 	while (engine->game.map[0][i])
 		i++;
 	engine->game.m_w = i;
+	engine->player.points = 0;
+	engine->player.img_flag = 0;
 }
 
 void	set_symbols_count(t_engine *engine)
@@ -102,8 +104,10 @@ void	set_imgs(t_engine *engine)
 	t_imgs	*imgs;
 
 	imgs = &engine->imgs;
-	imgs->p = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/player.xpm", &width, &height);
+	imgs->p_1 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/player_1.xpm", &width, &height);
+	imgs->p_2 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/player_2.xpm", &width, &height);
 	imgs->coin = mlx_xpm_file_to_image(engine->mlx, \
 				"./xpm/coin.xpm", &width, &height);
 	imgs->enemy = mlx_xpm_file_to_image(engine->mlx, \
@@ -112,21 +116,39 @@ void	set_imgs(t_engine *engine)
 				"./xpm/wall.xpm", &width, &width);
 	imgs->grass = mlx_xpm_file_to_image(engine->mlx, \
 				"./xpm/grass.xpm", &width, &width);
+	imgs->door_1 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/door_1.xpm", &width, &width);
+	imgs->door_2 = mlx_xpm_file_to_image(engine->mlx, \
+				"./xpm/door_2.xpm", &width, &width);
 }
 
 void	draw_block(t_engine *engine, char symbol, int i, int j)
 {
+	mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.grass, i, j);
 	if (symbol == '1')
 		mlx_put_image_to_window(engine->mlx ,engine->window, engine->imgs.wall, i, j);
-	else if (symbol == 'P')
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p, i, j);
+	else if (symbol == 'P' && engine->player.img_flag)
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p_1, i, j);
+	else if (symbol == 'P' && !engine->player.img_flag)
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p_2, i, j);
 	else if (symbol == 'C')
 		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.coin, i, j);
 	else if (symbol == 'E')
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.door_1, i, j);
+	else if (symbol == 'X')
 		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.enemy, i, j);
-	else if (symbol == '0')
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.grass, i, j);
 }
+char	*ft_itoa(int n);
+
+void draw_points(t_engine *engine)
+{
+	char *point;
+	
+	point = ft_itoa(engine->player.points);
+	mlx_string_put(engine->mlx, engine->window, 50, 50, 0x00FFFFFF, point);
+	free(point);
+}
+
 
 int	draw_game(t_engine *engine)
 {
@@ -138,7 +160,6 @@ int	draw_game(t_engine *engine)
 
 	map = engine->game.map;
 	i = -1;
-	j = -1;
 	while (map[++i])
 	{
 		j = -1;
@@ -147,13 +168,22 @@ int	draw_game(t_engine *engine)
 			x = j * BLOCK_SIZE;
 			y = i * BLOCK_SIZE;
 			draw_block(engine, map[i][j], x, y);
+			draw_points(engine);
 		}
 	}
 	return (0);
 }
 
+int	on_destroy_exit(t_engine *engine)
+{
+	mlx_destroy_window(engine->mlx, engine->window);
+	exit(EXIT_SUCCESS);
+}
+void	close_window_free_and_exit(t_engine *engine)
+{
+	mlx_destroy_window(engine->mlx, engine->window);
+}
 
-int	on_key_hook_event(int key, t_engine *engine);
 int	main(void)
 {
 	t_engine	engine;
