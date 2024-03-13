@@ -16,9 +16,7 @@ typedef struct s_imgs
 	void	*p;
 	void	*grass;
 	void	*coin;
-	// void	*coin_2;
 	void	*enemy;
-	// void	*enemy_2;
 	void	*wall;
 	void	*e_open;
 	void	*e_close;

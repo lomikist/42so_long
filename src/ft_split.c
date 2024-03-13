@@ -83,13 +83,3 @@ char	**ft_split(char const *s, char c)
 	str[len] = NULL;
 	return (str);
 }
-
-// #include <stdio.h>
-// int main(){
-//     char *s1 = "      split       this for   me  !       ";
-// 	char **s2;
-
-//     s2 = ft_split(s1,' ');
-// 	int i = 0;
-// 	i++;
-// }
