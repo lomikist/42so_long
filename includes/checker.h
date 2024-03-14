@@ -31,6 +31,7 @@ typedef struct s_player
 	int	y;
 	int points;
 	int img_flag;
+	int door_flag;
 }	t_player;
 
 typedef struct s_game

@@ -4,7 +4,7 @@
 
 
 void	error_message(char *text, int mode);
-int		on_key_hook_event(int key, t_engine *engine);
+int		on_key_hook_event(t_engine *engine,int key);
 
 char	**read_map(int fd)
 {
@@ -54,6 +54,7 @@ void	set_up_game(t_engine *engine)
 	engine->game.m_w = i;
 	engine->player.points = 0;
 	engine->player.img_flag = 0;
+	engine->player.door_flag = 0;
 }
 
 void	set_symbols_count(t_engine *engine)
@@ -133,11 +134,14 @@ void	draw_block(t_engine *engine, char symbol, int i, int j)
 		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p_2, i, j);
 	else if (symbol == 'C')
 		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.coin, i, j);
-	else if (symbol == 'E')
+	else if (symbol == 'E' && !engine->player.door_flag)
+		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.door_2, i, j);
+	else if (symbol == 'E' && engine->player.door_flag)
 		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.door_1, i, j);
 	else if (symbol == 'X')
 		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.enemy, i, j);
 }
+
 char	*ft_itoa(int n);
 
 void draw_points(t_engine *engine)

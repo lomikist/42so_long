@@ -54,16 +54,16 @@ int	check_boarder(t_game *game)
 	i = 0;
 	while (i < game->m_w)
 	{
-		if (game->map[0][i] && game->map[0][i] != 1
-			&& game->map[game->m_h - 1][i] != 1)
+		if (game->map[0][i] != '1'
+			&& game->map[game->m_h - 1][i] != '1')
 			return (0);
 		i++;
 	}
 	i = 0;
 	while (i < game->m_h)
 	{
-		if (game->map[i][0] && game->map[i][0] != 1
-			&& game->map[i][game->m_w - 1] != 1)
+		if (game->map[i][0] != '1'
+			&& game->map[i][game->m_w - 1] != '1')
 			return (0);
 		i++;
 	}
@@ -86,7 +86,7 @@ int	check(t_engine *engine)
 	game = &engine->game;
 	if (
 		check_lines(game) == 1 
-		// && check_boarder(game) == 1
+		&& check_boarder(game) == 1
 		&& check_p_e_c(&engine->symbols) == 1
 		&& check_path(game, player->y, player->x) == 1
 		)
