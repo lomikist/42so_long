@@ -1,4 +1,5 @@
 #include "mlx.h"
+#include <fcntl.h>
 #define BLOCK_SIZE 80
 
 #ifndef CHECKER_H
@@ -32,6 +33,7 @@ typedef struct s_player
 	int points;
 	int img_flag;
 	int door_flag;
+	int move_count;
 }	t_player;
 
 typedef struct s_game

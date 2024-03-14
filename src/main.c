@@ -1,5 +1,4 @@
 #include "../includes/get_next_line.h" 
-#include <fcntl.h>
 #include "checker.h"
 
 
@@ -143,14 +142,21 @@ void	draw_block(t_engine *engine, char symbol, int i, int j)
 }
 
 char	*ft_itoa(int n);
+char	*ft_strjoin_gnl(char *s1, const char *s2);
 
 void draw_points(t_engine *engine)
 {
 	char *point;
+	char *moves;
 	
 	point = ft_itoa(engine->player.points);
-	mlx_string_put(engine->mlx, engine->window, 50, 50, 0x00FFFFFF, point);
+	moves = ft_itoa(engine->player.move_count);
+	mlx_string_put(engine->mlx, engine->window, 50, 20, 0x00FFFFFF, "Move count - ");
+	mlx_string_put(engine->mlx, engine->window, 135, 20, 0x00FFFFFF, moves);
+	mlx_string_put(engine->mlx, engine->window, 50, 50, 0x00FFFFFF, "Points count - ");
+	mlx_string_put(engine->mlx, engine->window, 155, 50, 0x00FFFFFF, point);
 	free(point);
+	free(moves);
 }
 
 

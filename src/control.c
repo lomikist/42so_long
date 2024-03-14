@@ -43,6 +43,7 @@ void	move_horizontal(t_engine *engine, int key)
 		map[player->y][player->x] = '0';
 		player->x -= 1;
 		map[player->y][player->x] = 'P';
+		player->move_count++;
 	}
 	else if (key == KEY_D && map[player->y][player->x + 1] != '1')
 	{
@@ -51,6 +52,7 @@ void	move_horizontal(t_engine *engine, int key)
 		map[player->y][player->x] = '0';
 		player->x += 1;
 		map[player->y][player->x] = 'P';
+		player->move_count++;
 	}
 	player->img_flag = !player->img_flag;
 }
@@ -69,6 +71,7 @@ void	move_vertical(t_engine *engine, int key)
 		map[player->y][player->x] = '0';
 		player->y -= 1;
 		map[player->y][player->x] = 'P';
+		player->move_count++;
 	}
 	else if (key == KEY_S && map[player->y + 1][player->x] != '1')
 	{
@@ -77,6 +80,7 @@ void	move_vertical(t_engine *engine, int key)
 		map[player->y][player->x] = '0';
 		player->y += 1;
 		map[player->y][player->x] = 'P';
+		player->move_count++;
 	}
 	player->img_flag = !player->img_flag;
 }
