@@ -196,7 +196,6 @@ void	map_free(int i, char **map)
 	}
 	free(map);
 }
-
 void	close_window_free_and_exit(t_engine *engine, char *sms)
 {
 	mlx_destroy_window(engine->mlx, engine->window);
@@ -221,10 +220,10 @@ int	main(void)
 
 	set_up_game(&engine);
 	set_symbols_count(&engine);
-	if (check(&engine) == 0)
-		exit(EXIT_SUCCESS);
 	set_mlx(&engine);
 	set_imgs(&engine);
+	if (check(&engine) == 0)
+		exit(EXIT_SUCCESS);
 	mlx_loop_hook(engine.mlx, draw_game, &engine);
 	mlx_key_hook(engine.window, on_key_hook_event, &engine);
 	mlx_loop(engine.mlx);
