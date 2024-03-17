@@ -2,8 +2,13 @@
 #include "checker.h"
 
 
-void	error_message(char *text, int mode);
-int		on_key_hook_event(t_engine *engine,int key);
+// void	error_message(char *text, int mode);
+int		on_key_hook_event(t_engine *engine, int key);
+void	error_message(char *sms)
+{
+	printf("%s\n", sms);
+	exit(EXIT_FAILURE);
+}
 
 char	**read_map(int fd)
 {
@@ -85,16 +90,13 @@ void	set_symbols_count(t_engine *engine)
 	}
 }
 
-
-
 void	set_mlx(t_engine *engine)
 {
 	engine->mlx = mlx_init();
 	if (!engine->mlx)
-		error_message("[MLX ERROR]: can't do mlx_init!\n", 1);
+		error_message("[MLX ERROR]: can't do mlx_init!\n");
 	engine->window = mlx_new_window(engine->mlx, engine->game.m_w * BLOCK_SIZE, \
 					engine->game.m_h * BLOCK_SIZE, "SOOOO LONG");
-
 }
 
 void	set_imgs(t_engine *engine)
@@ -184,14 +186,33 @@ int	draw_game(t_engine *engine)
 	return (0);
 }
 
+
+void	map_free(int i, char **map)
+{
+	while (i >= 0)
+	{
+		free(map[i]);
+		--i;
+	}
+	free(map);
+}
+
+void	close_window_free_and_exit(t_engine *engine, char *sms)
+{
+	mlx_destroy_window(engine->mlx, engine->window);
+	map_free(engine->game.m_h, engine->game.map);
+	map_free(engine->game.m_h, engine->game.map_cp);
+	printf("You did %d moves\n", engine->player.move_count);
+	error_message(sms);
+}
+
 int	on_destroy_exit(t_engine *engine)
 {
 	mlx_destroy_window(engine->mlx, engine->window);
+	map_free(engine->game.m_h, engine->game.map);
+	map_free(engine->game.m_h, engine->game.map_cp);
+	printf("You left the game and did %d moves\n", engine->player.move_count);
 	exit(EXIT_SUCCESS);
-}
-void	close_window_free_and_exit(t_engine *engine)
-{
-	mlx_destroy_window(engine->mlx, engine->window);
 }
 
 int	main(void)

@@ -1,16 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: arsargsy <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/28 22:14:19 by arsargsy          #+#    #+#             */
-/*   Updated: 2024/01/28 22:14:20 by arsargsy         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-// #include "libft.h"
 #include "checker.h"
 #include <stdlib.h>
 
@@ -67,13 +54,3 @@ char	*ft_itoa(int n)
 		*(str) = 45;
 	return (str);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	char *result = ft_itoa(-140225);
-
-// 	puts(result);
-// 	free(result);
-// 	return (0);
-// }

@@ -28,7 +28,6 @@ INCLUDES		= $(wildcard $(INCLUDES_DIR)/*.h)
 SRCS_DIR		= src/
 SRC_FILES		= main.c \
 				  checker.c \
-				  draw.c \
 				  control.c \
 				  utils.c \
 				  ft_split.c \

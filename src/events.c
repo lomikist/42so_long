@@ -2,6 +2,7 @@
 #include "keys.h"
 void	move_vertical(t_engine *engine, int key);
 void	move_horizontal(t_engine *engine, int key);
+int		on_destroy_exit(t_engine *engine);
 
 #include <stdio.h>
 int	on_key_hook_event(int key, t_engine *engine)
@@ -11,7 +12,7 @@ int	on_key_hook_event(int key, t_engine *engine)
 	else if (key == KEY_A || key == KEY_D)
 		move_horizontal(engine, key);
 	else if (key == KEY_ESC)
-		mlx_destroy_window(engine->mlx, engine->window);
+		on_destroy_exit(engine);
 	if (engine->player.points == engine->symbols.coin_c)
 		engine->player.door_flag = 1;
 	return (0);
