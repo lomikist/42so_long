@@ -1,5 +1,8 @@
 #include "mlx.h"
 #include <fcntl.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include "../includes/get_next_line.h" 
 #define BLOCK_SIZE 80
 
 #ifndef CHECKER_H
@@ -49,11 +52,27 @@ typedef struct s_engine
 	t_player	player;
 	t_game		game;
 	t_symbols	symbols;
-	void        *mlx;
-	void        *window;
 	t_imgs		imgs;
+	void		*mlx;
+	void		*window;
 }	t_engine;
 
-int	check(t_engine *);
+void	error_message(char *sms);
+int		check(t_engine *engine);
+void	move_vertical(t_engine *engine, int key);
+void	move_horizontal(t_engine *engine, int key);
+int		on_destroy_exit(t_engine *engine);
+int		on_key_hook_event(int key, t_engine *engine);
+char	*ft_itoa(int n);
+char	*ft_strjoin_gnl(char *s1, const char *s2);
+void	close_window_free_and_exit(t_engine *engine, char *sms);
+void	draw_points(t_engine *engine);
+int		draw_game(t_engine *engine);
+void	draw_block(t_engine *engine, char symbol, int i, int j);
+int		check_p_e_c(t_engine *engine);
+int		check_boarder(t_engine *engine);
+int		check_lines(t_engine *engine);
+int		check_dead_case(t_engine *engine, int y, int x);
+int		check_path(t_engine *engine, int y, int x);
 
 #endif

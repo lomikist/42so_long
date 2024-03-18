@@ -1,9 +1,16 @@
-#include "checker.h"
-#include <stddef.h>
-#include "../includes/get_next_line.h" 
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arsargsy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 23:06:06 by arsargsy          #+#    #+#             */
+/*   Updated: 2024/03/18 23:06:08 by arsargsy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	on_destroy_exit(t_engine *engine);
-void	close_window_free_and_exit(t_engine *engine, char *sms);
+#include "checker.h"
 
 int	check_dead_case(t_engine *engine, int y, int x)
 {
@@ -93,17 +100,4 @@ int	check_p_e_c(t_engine *engine)
 	if (symbols->exit_c == 1 && symbols->player_c == 1 && symbols->coin_c > 1)
 		return (1);
 	return (0);
-}
-
-int	check(t_engine *engine)
-{
-	if (check_lines(engine) == 0)
-		close_window_free_and_exit(engine, "Line problem.");
-	if (check_boarder(engine) == 0)
-		close_window_free_and_exit(engine, "Boarder problem.");
-	if (check_p_e_c(engine) == 0)
-		close_window_free_and_exit(engine, "Symbol problem.");
-	if (check_path(engine, engine->player.y, engine->player.x) == 0)
-		close_window_free_and_exit(engine, "Path problem.");
-	return (1);
 }

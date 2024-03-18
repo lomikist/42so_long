@@ -1,14 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: arsargsy <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/18 23:07:29 by arsargsy          #+#    #+#             */
+/*   Updated: 2024/03/18 23:07:34 by arsargsy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/get_next_line.h" 
 #include "checker.h"
-
-
-// void	error_message(char *text, int mode);
-int		on_key_hook_event(t_engine *engine, int key);
-void	error_message(char *sms)
-{
-	printf("%s\n", sms);
-	exit(EXIT_FAILURE);
-}
 
 char	**read_map(int fd)
 {
@@ -37,16 +40,20 @@ char	**read_map(int fd)
 	return (result);
 }
 
-void	set_up_game(t_engine *engine)
+void	set_up_game(t_engine *engine, char **argv)
 {
-	int				i;
-	int				fd;
+	int	i;
+	int	fd;
 
 	i = 0;
-	fd = open("./maps/map.bar", O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		exit(1);
 	engine->game.map = read_map(fd);
 	close(fd);
-	fd = open("./maps/map.bar", O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		exit(1);
 	engine->game.map_cp = read_map(fd);
 	close(fd);
 	while (engine->game.map[i])
@@ -90,21 +97,14 @@ void	set_symbols_count(t_engine *engine)
 	}
 }
 
-void	set_mlx(t_engine *engine)
-{
-	engine->mlx = mlx_init();
-	if (!engine->mlx)
-		error_message("[MLX ERROR]: can't do mlx_init!\n");
-	engine->window = mlx_new_window(engine->mlx, engine->game.m_w * BLOCK_SIZE, \
-					engine->game.m_h * BLOCK_SIZE, "SOOOO LONG");
-}
-
 void	set_imgs(t_engine *engine)
 {
-	int		width = 50;
-	int		height = 50;
+	int		width;
+	int		height;
 	t_imgs	*imgs;
 
+	width = 50;
+	height = 50;
 	imgs = &engine->imgs;
 	imgs->p_1 = mlx_xpm_file_to_image(engine->mlx, \
 				"./xpm/player_1.xpm", &width, &height);
@@ -124,103 +124,18 @@ void	set_imgs(t_engine *engine)
 				"./xpm/door_2.xpm", &width, &width);
 }
 
-void	draw_block(t_engine *engine, char symbol, int i, int j)
-{
-	mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.grass, i, j);
-	if (symbol == '1')
-		mlx_put_image_to_window(engine->mlx ,engine->window, engine->imgs.wall, i, j);
-	else if (symbol == 'P' && engine->player.img_flag)
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p_1, i, j);
-	else if (symbol == 'P' && !engine->player.img_flag)
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.p_2, i, j);
-	else if (symbol == 'C')
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.coin, i, j);
-	else if (symbol == 'E' && !engine->player.door_flag)
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.door_2, i, j);
-	else if (symbol == 'E' && engine->player.door_flag)
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.door_1, i, j);
-	else if (symbol == 'X')
-		mlx_put_image_to_window(engine->mlx, engine->window, engine->imgs.enemy, i, j);
-}
-
-char	*ft_itoa(int n);
-char	*ft_strjoin_gnl(char *s1, const char *s2);
-
-void draw_points(t_engine *engine)
-{
-	char *point;
-	char *moves;
-	
-	point = ft_itoa(engine->player.points);
-	moves = ft_itoa(engine->player.move_count);
-	mlx_string_put(engine->mlx, engine->window, 50, 20, 0x00FFFFFF, "Move count - ");
-	mlx_string_put(engine->mlx, engine->window, 135, 20, 0x00FFFFFF, moves);
-	mlx_string_put(engine->mlx, engine->window, 50, 50, 0x00FFFFFF, "Points count - ");
-	mlx_string_put(engine->mlx, engine->window, 155, 50, 0x00FFFFFF, point);
-	free(point);
-	free(moves);
-}
-
-
-int	draw_game(t_engine *engine)
-{
-	int	i;
-	int j;
-	char **map;
-	int	x;
-	int	y;
-
-	map = engine->game.map;
-	i = -1;
-	while (map[++i])
-	{
-		j = -1;
-		while (map[i][++j])
-		{
-			x = j * BLOCK_SIZE;
-			y = i * BLOCK_SIZE;
-			draw_block(engine, map[i][j], x, y);
-			draw_points(engine);
-		}
-	}
-	return (0);
-}
-
-
-void	map_free(int i, char **map)
-{
-	while (i >= 0)
-	{
-		free(map[i]);
-		--i;
-	}
-	free(map);
-}
-void	close_window_free_and_exit(t_engine *engine, char *sms)
-{
-	mlx_destroy_window(engine->mlx, engine->window);
-	map_free(engine->game.m_h, engine->game.map);
-	map_free(engine->game.m_h, engine->game.map_cp);
-	printf("You did %d moves\n", engine->player.move_count);
-	error_message(sms);
-}
-
-int	on_destroy_exit(t_engine *engine)
-{
-	mlx_destroy_window(engine->mlx, engine->window);
-	map_free(engine->game.m_h, engine->game.map);
-	map_free(engine->game.m_h, engine->game.map_cp);
-	printf("You left the game and did %d moves\n", engine->player.move_count);
-	exit(EXIT_SUCCESS);
-}
-
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_engine	engine;
 
-	set_up_game(&engine);
+	(void)argc;
+	set_up_game(&engine, argv);
 	set_symbols_count(&engine);
-	set_mlx(&engine);
+	engine.mlx = mlx_init();
+	if (!engine.mlx)
+		error_message("Can't do mlx_init!\n");
+	engine.window = mlx_new_window(engine.mlx, engine.game.m_w * BLOCK_SIZE, \
+					engine.game.m_h * BLOCK_SIZE, "SO LONG");
 	set_imgs(&engine);
 	if (check(&engine) == 0)
 		exit(EXIT_SUCCESS);

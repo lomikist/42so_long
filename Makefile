@@ -31,6 +31,7 @@ SRC_FILES		= main.c \
 				  control.c \
 				  utils.c \
 				  ft_split.c \
+				  draw.c \
 				  events.c \
 			 	  get_next_line_utils.c \
 				  get_next_line.c \
