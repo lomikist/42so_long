@@ -35,11 +35,7 @@ void	display_info(void)
 {
 	char	*sms;
 
-	sms = "\tThis INTERSETING game is developed by gverdyan and dpetrosy\
- for kids.\n\tYou need to collect all jelyfishes to finish the \
-game.\n\tWhen you did so, the pineapple becomes the House where\
- you can escape from evil you!\n\tTo start the game identify\
-the map. Be Careful it is so hard and your life depends on it.\
+	sms = "\tlife depends on it.\
 	\n\tOnly 0.13\% can handle this challenge.\
 	\n\tGood luck, Bikkini Bottom relies on you.\
 	\n\n\tP.S. We love 42 norminette and 42 minilibx leaks";

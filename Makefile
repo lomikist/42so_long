@@ -30,13 +30,19 @@ SRC_FILES		= main.c \
 				  checker.c \
 				  control.c \
 				  utils.c \
-				  ft_split.c \
 				  draw.c \
 				  events.c \
 			 	  get_next_line_utils.c \
 				  get_next_line.c \
-				  ft_itoa.c \
-# SRCS			= $(addprefix $(SRCS_DIR), $(SRC_FILES))
+#PRINTF
+PRINTF_DIR	= ft_printf
+PRINTF = $(PRINTF_DIR)/libftprintf.a
+LINKER	= -lftprintf -L $(PRINTF_DIR)
+
+#LIBFT
+LIBFT_DIR	= libft
+LIBFT 		= $(LIBFT_DIR)/libft.a
+LINKER 		+= -lft -L $(LIBFT_DIR)
 
 # Objects
 OBJS_DIR		= objs/
@@ -56,12 +62,22 @@ else
 	INCLUDES_FLAG	+= -I$(MLX_DIR)
 endif
 
-all : $(MLX) $(OBJS_DIR) $(NAME)
+all : $(MLX) $(PRINTF) $(LIBFT) $(OBJS_DIR) $(NAME)
 
 $(MLX) :
 	@echo $(CYAN) " - Making mlx..." $(RESET)
 	@$(MAKE) $(MLX_DIR)
 	@echo $(YELLOW) " - Made mlx!" $(RESET)
+	
+$(PRINTF) :
+	@echo $(CYAN) " - Making printf..." $(RESET)
+	@$(MAKE) $(PRINTF_DIR)
+	@echo $(YELLOW) " - Made printf!" $(RESET)
+
+$(LIBFT) :
+	@echo $(CYAN) " - Making libft..." $(RESET)
+	@$(MAKE) $(LIBFT_DIR)
+	@echo $(YELLOW) " - Made libft!" $(RESET)
 
 $(OBJS_DIR) :
 	@$(MKDIR) $(OBJS_DIR)
@@ -81,6 +97,8 @@ clean :
 fclean : clean
 	@$(RM) $(NAME)
 	@$(MAKE) $(MLX_DIR) clean
+	@$(MAKE) $(PRINTF_DIR) fclean
+	@$(MAKE) $(LIBFT_DIR) fclean
 
 re: fclean all
 

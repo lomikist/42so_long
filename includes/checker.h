@@ -2,7 +2,10 @@
 #include <fcntl.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include "../ft_printf/ft_printf.h"
 #include "../includes/get_next_line.h" 
+#include "../libft/libft.h" 
+
 #define BLOCK_SIZE 80
 
 #ifndef CHECKER_H
@@ -63,8 +66,6 @@ void	move_vertical(t_engine *engine, int key);
 void	move_horizontal(t_engine *engine, int key);
 int		on_destroy_exit(t_engine *engine);
 int		on_key_hook_event(int key, t_engine *engine);
-char	*ft_itoa(int n);
-char	*ft_strjoin_gnl(char *s1, const char *s2);
 void	close_window_free_and_exit(t_engine *engine, char *sms);
 void	draw_points(t_engine *engine);
 int		draw_game(t_engine *engine);
@@ -74,5 +75,6 @@ int		check_boarder(t_engine *engine);
 int		check_lines(t_engine *engine);
 int		check_dead_case(t_engine *engine, int y, int x);
 int		check_path(t_engine *engine, int y, int x);
+void	display_info(void);
 
 #endif

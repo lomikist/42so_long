@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arsargsy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/18 23:06:48 by arsargsy          #+#    #+#             */
-/*   Updated: 2024/03/18 23:06:50 by arsargsy         ###   ########.fr       */
+/*   Created: 2024/01/28 22:50:03 by arsargsy          #+#    #+#             */
+/*   Updated: 2024/01/31 16:37:38 by arsargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "libft.h"
 
 static void	clear_mall(char **str, int len)
 {
@@ -70,10 +70,14 @@ static char	**stick_arr(char **str, const char *s, char c, int len)
 
 char	**ft_split(char const *s, char c)
 {
+	int		i;
 	int		len;
 	char	**str;
 
+	i = 0;
 	len = 0;
+	if (!s)
+		return (NULL);
 	len = get_words_count(s, c);
 	str = malloc(sizeof(char *) * (len + 1));
 	if (!str)
@@ -82,3 +86,16 @@ char	**ft_split(char const *s, char c)
 	str[len] = NULL;
 	return (str);
 }
+/*
+#include <stdio.h>
+int main(){
+    char *s1 = "      split       this for   me  !       ";
+	char **s2;
+
+    s2 = ft_split(s1,' ');
+	//system("leaks a.out");
+	while (1)
+		;
+	int i = 0;
+	i++;
+}*/
