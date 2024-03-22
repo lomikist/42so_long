@@ -12,7 +12,7 @@ WHITE    		= "\033[37m"    # White
 # Compiler
 NAME			= so_long
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
+CFLAGS			= -Wall -Wextra -Werror -g
 OS				= $(shell uname)
 MAKE			= make -sC
 MKDIR			= mkdir -p

@@ -64,6 +64,7 @@ void	set_up_game(t_engine *engine, char **argv)
 		i++;
 	engine->game.m_w = i;
 	engine->player.points = 0;
+	engine->player.move_count = 0;
 	engine->player.img_flag = 0;
 	engine->player.door_flag = 0;
 }
@@ -97,43 +98,45 @@ void	set_symbols_count(t_engine *engine)
 	}
 }
 
-void	set_imgs(t_engine *engine)
+void	set_imgs(t_engine *eng)
 {
 	int		width;
-	int		height;
 	t_imgs	*imgs;
 
 	width = 50;
-	height = 50;
-	imgs = &engine->imgs;
-	imgs->p_1 = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/player_1.xpm", &width, &height);
-	imgs->p_2 = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/player_2.xpm", &width, &height);
-	imgs->coin = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/coin.xpm", &width, &height);
-	imgs->enemy = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/enemy.xpm", &width, &height);
-	imgs->wall = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/wall.xpm", &width, &width);
-	imgs->grass = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/grass.xpm", &width, &width);
-	imgs->door_1 = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/door_1.xpm", &width, &width);
-	imgs->door_2 = mlx_xpm_file_to_image(engine->mlx, \
-				"./xpm/door_2.xpm", &width, &width);
+	imgs = &eng->imgs;
+	imgs->p_1 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/player_1.xpm", &width, &width);
+	imgs->p_2 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/player_2.xpm", &width, &width);
+	imgs->coin = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/coin.xpm", &width, &width);
+	imgs->coin2 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/coin2.xpm", &width, &width);
+	imgs->enemy1 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/enemy.xpm", &width, &width);
+	imgs->enemy2 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/enemy2.xpm", &width, &width);
+	imgs->wall = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/wall.xpm", &width, &width);
+	imgs->grass = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/grass.xpm", &width, &width);
+	imgs->door_1 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/door_1.xpm", &width, &width);
+	imgs->door_2 = mlx_xpm_file_to_image(eng->mlx,
+			"./xpm/door_2.xpm", &width, &width);
 }
 
 int	main(int argc, char **argv)
 {
 	t_engine	engine;
 
-	if (argc < 2)
-	{
-		display_info();
-		exit(EXIT_FAILURE);
-	}
+	args_valid(argc, argv);
 	set_up_game(&engine, argv);
+	engine.symbols.player_c = 0;
+	engine.symbols.exit_c = 0;
+	engine.symbols.coin_c = 0;
+	engine.symbols.enemy_c = 0;
 	set_symbols_count(&engine);
 	engine.mlx = mlx_init();
 	if (!engine.mlx)
@@ -145,6 +148,7 @@ int	main(int argc, char **argv)
 		exit(EXIT_SUCCESS);
 	mlx_loop_hook(engine.mlx, draw_game, &engine);
 	mlx_key_hook(engine.window, on_key_hook_event, &engine);
+	mlx_hook(engine.window, 17, 0, on_destroy_exit, &engine);
 	mlx_loop(engine.mlx);
 	return (0);
 }

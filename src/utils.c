@@ -31,17 +31,6 @@ void	map_free(int i, char **map)
 	free(map);
 }
 
-void	display_info(void)
-{
-	char	*sms;
-
-	sms = "\tlife depends on it.\
-	\n\tOnly 0.13\% can handle this challenge.\
-	\n\tGood luck, Bikkini Bottom relies on you.\
-	\n\n\tP.S. We love 42 norminette and 42 minilibx leaks";
-	ft_printf("%si\n", sms);
-}
-
 void	close_window_free_and_exit(t_engine *engine, char *sms)
 {
 	mlx_destroy_window(engine->mlx, engine->window);
