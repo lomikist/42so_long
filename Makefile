@@ -12,7 +12,7 @@ WHITE    		= "\033[37m"    # White
 # Compiler
 NAME			= so_long
 CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g
+CFLAGS			= -Wall -Wextra -Werror -g -fsanitize=address
 OS				= $(shell uname)
 MAKE			= make -sC
 MKDIR			= mkdir -p
@@ -31,6 +31,7 @@ SRC_FILES		= main.c \
 				  control.c \
 				  utils.c \
 				  draw.c \
+				  readmap.c \
 				  events.c \
 			 	  get_next_line_utils.c \
 				  get_next_line.c \

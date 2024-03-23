@@ -6,39 +6,11 @@
 /*   By: arsargsy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:07:29 by arsargsy          #+#    #+#             */
-/*   Updated: 2024/03/18 23:07:34 by arsargsy         ###   ########.fr       */
+/*   Updated: 2024/03/22 22:33:24 by arsargsy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/get_next_line.h" 
 #include "checker.h"
-
-char	**read_map(int fd)
-{
-	char	**result;
-	char	*one_line;
-	char	*file_summary;
-	int		i;
-
-	i = 0;
-	one_line = get_next_line(fd);
-	while (one_line)
-	{
-		if (i == 0)
-			file_summary = ft_strdup((const char *)one_line);
-		else
-		{
-			one_line = get_next_line(fd);
-			if (one_line)
-				file_summary = ft_strjoin_gnl(file_summary, one_line);
-		}
-		free(one_line);
-		i++;
-	}
-	result = ft_split(file_summary, '\n');
-	free(file_summary);
-	return (result);
-}
 
 void	set_up_game(t_engine *engine, char **argv)
 {
@@ -106,25 +78,25 @@ void	set_imgs(t_engine *eng)
 	width = 50;
 	imgs = &eng->imgs;
 	imgs->p_1 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/player_1.xpm", &width, &width);
+			"./textures/player_1.xpm", &width, &width);
 	imgs->p_2 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/player_2.xpm", &width, &width);
+			"./textures/player_2.xpm", &width, &width);
 	imgs->coin = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/coin.xpm", &width, &width);
+			"./textures/coin.xpm", &width, &width);
 	imgs->coin2 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/coin2.xpm", &width, &width);
+			"./textures/coin2.xpm", &width, &width);
 	imgs->enemy1 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/enemy.xpm", &width, &width);
+			"./textures/enemy.xpm", &width, &width);
 	imgs->enemy2 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/enemy2.xpm", &width, &width);
+			"./textures/enemy2.xpm", &width, &width);
 	imgs->wall = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/wall.xpm", &width, &width);
+			"./textures/wall.xpm", &width, &width);
 	imgs->grass = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/grass.xpm", &width, &width);
+			"./textures/grass.xpm", &width, &width);
 	imgs->door_1 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/door_1.xpm", &width, &width);
+			"./textures/door_1.xpm", &width, &width);
 	imgs->door_2 = mlx_xpm_file_to_image(eng->mlx,
-			"./xpm/door_2.xpm", &width, &width);
+			"./textures/door_2.xpm", &width, &width);
 }
 
 int	main(int argc, char **argv)

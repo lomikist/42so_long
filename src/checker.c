@@ -97,7 +97,7 @@ int	check_p_e_c(t_engine *engine)
 	t_symbols	*symbols;
 
 	symbols = &engine->symbols;
-	if (symbols->exit_c == 1 && symbols->player_c == 1 && symbols->coin_c > 1)
+	if (symbols->exit_c == 1 && symbols->player_c == 1 && symbols->coin_c >= 1)
 		return (1);
 	return (0);
 }

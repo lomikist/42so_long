@@ -20,6 +20,7 @@
 # include "../ft_printf/ft_printf.h"
 # include "../includes/get_next_line.h" 
 # include "../libft/libft.h" 
+#include "../includes/get_next_line.h" 
 
 # define BLOCK_SIZE 80
 
@@ -91,5 +92,6 @@ int		check_lines(t_engine *engine);
 int		check_dead_case(t_engine *engine, int y, int x);
 int		check_path(t_engine *engine, int y, int x);
 void	args_valid(int argc, char **argv);
+char	**read_map(int fd);
 
 #endif
