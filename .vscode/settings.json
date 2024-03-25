@@ -6,6 +6,9 @@
 		"checker.h": "c",
 		"stdio.h": "c",
 		"keys.h": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"ft_printf.h": "c",
+		"stddef.h": "c",
+		"stdlib.h": "c"
 	}
 }
