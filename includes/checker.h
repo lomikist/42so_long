@@ -13,16 +13,22 @@
 #ifndef CHECKER_H
 # define CHECKER_H
 
-# include "mlx.h"
-# include <fcntl.h>
-# include <stddef.h>
-# include <stdlib.h>
-# include "../ft_printf/ft_printf.h"
-# include "../includes/get_next_line.h" 
-# include "../libft/libft.h" 
-#include "../includes/get_next_line.h" 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
-# define BLOCK_SIZE 80
+# ifndef BLOCK_SIZE
+#  define BLOCK_SIZE 80
+# endif 
+
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <stddef.h>
+# include "mlx.h"
+# include "../ft_printf/ft_printf.h"
+# include "../libft/libft.h" 
 
 typedef struct s_symbols
 {
@@ -93,5 +99,7 @@ int		check_dead_case(t_engine *engine, int y, int x);
 int		check_path(t_engine *engine, int y, int x);
 void	args_valid(int argc, char **argv);
 char	**read_map(int fd);
+char	*get_next_line(int fd);
+char	*ft_strjoin_gnl(char *s1, const char *s2);
 
 #endif

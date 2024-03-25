@@ -27,6 +27,9 @@ void	contains_consecutive_newlines(char *str)
 		}
 		str++;
 	}
+	str--;
+	if (*str == '\n')
+		error_message("Problem with map with.");
 }
 
 char	**read_map(int fd)
